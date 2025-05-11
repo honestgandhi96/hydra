@@ -1,13 +1,46 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Brain, Target, Award, Zap } from 'lucide-react';
 import { useInView } from 'react-intersection-observer';
+import { Howl } from 'howler';
 
 interface HomePageProps {
   onStartPracticing: () => void;
 }
 
 const HomePage: React.FC<HomePageProps> = ({ onStartPracticing }) => {
+  const soundRefs = useRef<{[key: string]: Howl}>({});
+
+  useEffect(() => {
+    // Initialize sounds
+    soundRefs.current = {
+      hover: new Howl({
+        src: ['https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3'],
+        volume: 0.2,
+      }),
+      scroll: new Howl({
+        src: ['https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3'],
+        volume: 0.1,
+      }),
+      click: new Howl({
+        src: ['https://assets.mixkit.co/active_storage/sfx/2570/2570-preview.mp3'],
+        volume: 0.3,
+      })
+    };
+
+    return () => {
+      // Cleanup sounds
+      Object.values(soundRefs.current).forEach(sound => sound.unload());
+    };
+  }, []);
+
+  const playSound = (soundName: string) => {
+    const sound = soundRefs.current[soundName];
+    if (sound) {
+      sound.play();
+    }
+  };
+
   const benefits = [
     {
       icon: <Brain className="h-8 w-8 text-indigo-500" />,
@@ -57,7 +90,32 @@ const HomePage: React.FC<HomePageProps> = ({ onStartPracticing }) => {
 
   const [heroRef, heroInView] = useInView({
     triggerOnce: true,
-    threshold: 0.1
+    threshold: 0.1,
+    onChange: (inView) => {
+      if (inView) {
+        playSound('scroll');
+      }
+    }
+  });
+
+  const [benefitsRef, benefitsInView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+    onChange: (inView) => {
+      if (inView) {
+        playSound('scroll');
+      }
+    }
+  });
+
+  const [metricsRef, metricsInView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+    onChange: (inView) => {
+      if (inView) {
+        playSound('scroll');
+      }
+    }
   });
 
   const textVariants = {
@@ -124,7 +182,11 @@ const HomePage: React.FC<HomePageProps> = ({ onStartPracticing }) => {
                 variants={textVariants}
               >
                 <motion.button
-                  onClick={onStartPracticing}
+                  onClick={() => {
+                    playSound('click');
+                    onStartPracticing();
+                  }}
+                  onMouseEnter={() => playSound('hover')}
                   className="inline-flex items-center rounded-lg bg-gradient-to-r from-indigo-500 to-purple-600 px-6 py-3 text-base font-medium text-white shadow-lg hover:from-indigo-600 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -182,6 +244,7 @@ const HomePage: React.FC<HomePageProps> = ({ onStartPracticing }) => {
                   transition={{ delay: index * 0.2, duration: 0.5 }}
                   viewport={{ once: true }}
                   whileHover={{ y: -5, transition: { duration: 0.2 } }}
+                  onMouseEnter={() => playSound('hover')}
                 >
                   <div className="absolute -top-4 left-4 inline-flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 text-white">
                     {step.number}
@@ -197,6 +260,7 @@ const HomePage: React.FC<HomePageProps> = ({ onStartPracticing }) => {
 
       {/* Benefits Grid */}
       <motion.section 
+        ref={benefitsRef}
         className="mt-32 overflow-hidden py-16"
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -223,6 +287,7 @@ const HomePage: React.FC<HomePageProps> = ({ onStartPracticing }) => {
                   transition={{ delay: index * 0.1, duration: 0.5 }}
                   viewport={{ once: true }}
                   whileHover={{ y: -5, scale: 1.02 }}
+                  onMouseEnter={() => playSound('hover')}
                 >
                   <div className="mb-4">{benefit.icon}</div>
                   <h3 className="text-xl font-semibold text-white">{benefit.title}</h3>
@@ -236,6 +301,7 @@ const HomePage: React.FC<HomePageProps> = ({ onStartPracticing }) => {
 
       {/* Success Metrics */}
       <motion.section 
+        ref={metricsRef}
         className="mt-32 py-16"
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -275,6 +341,7 @@ const HomePage: React.FC<HomePageProps> = ({ onStartPracticing }) => {
                   show: { opacity: 1, y: 0 }
                 }}
                 whileHover={{ scale: 1.05 }}
+                onMouseEnter={() => playSound('hover')}
               >
                 <div className="text-4xl font-bold text-indigo-400">{metric.value}</div>
                 <div className="mt-2 text-sm text-gray-300">{metric.label}</div>
@@ -292,7 +359,11 @@ const HomePage: React.FC<HomePageProps> = ({ onStartPracticing }) => {
         transition={{ delay: 1, duration: 0.5 }}
       >
         <motion.button
-          onClick={onStartPracticing}
+          onClick={() => {
+            playSound('click');
+            onStartPracticing();
+          }}
+          onMouseEnter={() => playSound('hover')}
           className="flex items-center space-x-2 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 px-6 py-3 text-white shadow-lg hover:from-indigo-600 hover:to-purple-700"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
