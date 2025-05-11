@@ -54,3 +54,5 @@ const LuxuryRowCard: React.FC<LuxuryRowCardProps> = ({
     </button>
   );
 };
+
+export default LuxuryRowCard
