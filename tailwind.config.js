@@ -11,7 +11,7 @@ export default {
         'jet': '#000000'
       },
       fontFamily: {
-        'canela': ['Canela Deck', 'Palatino Linotype', 'serif'],
+        'canela': ['Canela Deck', 'serif'],
         'dm-serif': ['DM Serif Text', 'serif']
       },
       maxWidth: {
@@ -19,6 +19,13 @@ export default {
       },
       padding: {
         'section': '120px'
+      },
+      letterSpacing: {
+        'tightest': '-.075em',
+        'tighter-plus': '-.05em'
+      },
+      height: {
+        'hero': 'calc(100vh - 80px)'
       }
     },
   },

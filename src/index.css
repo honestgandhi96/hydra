@@ -18,6 +18,16 @@
   font-display: swap;
 }
 
+@layer base {
+  html {
+    @apply scroll-smooth antialiased;
+  }
+  
+  body {
+    @apply bg-paper-white text-espresso;
+  }
+}
+
 @layer utilities {
   .clip-inset-full {
     clip-path: inset(0 100% 0 0);
@@ -25,5 +35,30 @@
   
   .clip-inset-x {
     clip-path: inset(0 0 0 0);
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-off-white;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply rounded-full bg-parchment transition-colors hover:bg-espresso;
+}
+
+/* Smooth Scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
 }
