@@ -4,23 +4,21 @@ export default {
   theme: {
     extend: {
       colors: {
-        base: '#FAFAF9',
-        paper: '#E8ECEF',
-        sage: '#9BA8AB',
-        charcoal: '#36454F',
-        midnight: '#131A1C'
+        'paper-white': '#FFFFFF',
+        'off-white': '#F5F0EB',
+        'parchment': '#D4C2AE',
+        'espresso': '#2E1D10',
+        'jet': '#000000'
       },
       fontFamily: {
-        display: ['Neue Haas Grotesk Display', 'sans-serif'],
-        body: ['Space Grotesk', 'sans-serif']
+        'canela': ['Canela Deck', 'Palatino Linotype', 'serif'],
+        'dm-serif': ['DM Serif Text', 'serif']
       },
-      fontSize: {
-        'fluid-h1': 'clamp(2.5rem, 4vw, 3.5rem)',
-        'fluid-h2': 'clamp(2rem, 3vw, 2.75rem)',
-        'fluid-h3': 'clamp(1.25rem, 2vw, 2rem)'
+      maxWidth: {
+        'content': '1100px'
       },
-      spacing: {
-        'section': '96px'
+      padding: {
+        'section': '120px'
       }
     },
   },

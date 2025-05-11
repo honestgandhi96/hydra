@@ -2,13 +2,28 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'Canela Deck';
+  src: url('https://fonts.cdnfonts.com/css/canela-deck') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'DM Serif Text';
+  src: url('https://fonts.googleapis.com/css2?family=DM+Serif+Text&display=swap');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 @layer utilities {
-  .scrollbar-none {
-    scrollbar-width: none;
-    -ms-overflow-style: none;
+  .clip-inset-full {
+    clip-path: inset(0 100% 0 0);
   }
   
-  .scrollbar-none::-webkit-scrollbar {
-    display: none;
+  .clip-inset-x {
+    clip-path: inset(0 0 0 0);
   }
 }
