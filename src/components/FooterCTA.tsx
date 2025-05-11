@@ -4,7 +4,11 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const FooterCTA: React.FC = () => {
+interface FooterCTAProps {
+  onBeginPractice: () => void;
+}
+
+const FooterCTA: React.FC<FooterCTAProps> = ({ onBeginPractice }) => {
   const headlineRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
@@ -21,13 +25,6 @@ const FooterCTA: React.FC = () => {
     });
   }, []);
 
-  const handleBeginPractice = () => {
-    const interviewListElement = document.querySelector('.interview-list');
-    if (interviewListElement) {
-      interviewListElement.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
   return (
     <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-[#EAE7E2] py-6">
       <div className="mx-auto max-w-[1100px] px-4 md:px-8 lg:px-24">
@@ -39,7 +36,7 @@ const FooterCTA: React.FC = () => {
             Start interviewing today
           </h2>
           <button 
-            onClick={handleBeginPractice}
+            onClick={onBeginPractice}
             className="bg-[#2E1D10] text-white px-6 py-3 rounded-lg hover:bg-black transition-colors"
           >
             Begin Practice
