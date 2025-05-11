@@ -38,7 +38,7 @@ const InterviewList: React.FC = () => {
   }, [interviews]);
 
   return (
-    <div ref={containerRef} className="mx-auto max-w-[1100px] px-4 md:px-8 lg:px-24">
+    <div ref={containerRef} className="interview-list mx-auto max-w-[1100px] px-4 md:px-8 lg:px-24">
       <div className="space-y-px">
         {interviews.map((interview) => (
           <div
