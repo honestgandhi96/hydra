@@ -56,7 +56,7 @@ const SpotlightCard: React.FC<SpotlightCardProps> = ({
             transition={{
               duration: 2,
               repeat: Infinity,
-              ease: "sine.inOut"
+              ease: "easeInOut"
             }}
           >
             <Play className="h-5 w-5" />
