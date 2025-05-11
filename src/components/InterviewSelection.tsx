@@ -103,7 +103,7 @@ const InterviewSelection: React.FC<InterviewSelectionProps> = ({ onInterviewStar
         />
       </div>
 
-      <Dialog.Root open={!!selectedInterview} onOpenChange={() => setSelectedInterview(null)}>
+      <Dialog.Root open={!!selectedInterview} onOpenChange={(open) => !open && setSelectedInterview(null)}>
         <Dialog.Portal>
           <Dialog.Overlay 
             className="fixed inset-0 bg-midnight/40 backdrop-blur-[8px]"
