@@ -26,7 +26,7 @@ const SpotlightCard: React.FC<SpotlightCardProps> = ({
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.6, ease: "power1.out" }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
     >
       <div className="flex h-full flex-col">
         {/* Brand Stack */}
