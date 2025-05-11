@@ -59,3 +59,5 @@ const InterviewList: React.FC = () => {
     </div>
   );
 };
+
+export default InterviewList;

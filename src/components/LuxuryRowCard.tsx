@@ -55,4 +55,4 @@ const LuxuryRowCard: React.FC<LuxuryRowCardProps> = ({
   );
 };
 
-export default LuxuryRowCard
+export default LuxuryRowCard;
