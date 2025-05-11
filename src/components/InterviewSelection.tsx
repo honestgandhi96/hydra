@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 import * as Dialog from '@radix-ui/react-dialog';
 import { supabase } from '../services/supabase';
-import InterviewCard from './InterviewCard';
+import SpotlightCarousel from './SpotlightCarousel';
 import { cn } from '../lib/utils';
 
 interface Interview {
@@ -48,6 +48,13 @@ const InterviewSelection: React.FC<InterviewSelectionProps> = ({ onInterviewStar
     { id: 'ds', label: 'Data Science' },
   ];
 
+  const handleInterviewSelect = (interviewId: string) => {
+    const interview = interviews.find(i => i.id === interviewId);
+    if (interview) {
+      setSelectedInterview(interview);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-base px-6 py-section">
       <div className="mx-auto max-w-[900px]">
@@ -58,7 +65,7 @@ const InterviewSelection: React.FC<InterviewSelectionProps> = ({ onInterviewStar
           transition={{ duration: 0.6 }}
         >
           <h1 className="font-display text-fluid-h1 font-light text-charcoal">
-            Practice Interviews
+            Pick Your Challenge
           </h1>
           <p className="mt-4 text-lg text-charcoal/80">
             Select a company to start your mock session
@@ -84,21 +91,10 @@ const InterviewSelection: React.FC<InterviewSelectionProps> = ({ onInterviewStar
           ))}
         </div>
 
-        <motion.div 
-          className="grid gap-6"
-          layout
-        >
-          <AnimatePresence>
-            {interviews.map((interview) => (
-              <InterviewCard
-                key={interview.id}
-                interview={interview}
-                onClick={() => setSelectedInterview(interview)}
-                isSelected={selectedInterview?.id === interview.id}
-              />
-            ))}
-          </AnimatePresence>
-        </motion.div>
+        <SpotlightCarousel
+          interviews={interviews}
+          onInterviewSelect={handleInterviewSelect}
+        />
       </div>
 
       <Dialog.Root open={!!selectedInterview} onOpenChange={() => setSelectedInterview(null)}>
@@ -151,23 +147,6 @@ const InterviewSelection: React.FC<InterviewSelectionProps> = ({ onInterviewStar
           </Dialog.Content>
         </Dialog.Portal>
       </Dialog.Root>
-
-      {/* Mobile sticky CTA */}
-      {selectedInterview && (
-        <motion.div
-          className="fixed bottom-0 left-0 right-0 border-t border-paper bg-white p-4 md:hidden"
-          initial={{ y: '100%' }}
-          animate={{ y: 0 }}
-          exit={{ y: '100%' }}
-        >
-          <button
-            onClick={() => onInterviewStart(selectedInterview.id)}
-            className="w-full rounded-lg bg-sage py-3 text-center font-medium text-white"
-          >
-            Start Interview
-          </button>
-        </motion.div>
-      )}
     </div>
   );
 };
