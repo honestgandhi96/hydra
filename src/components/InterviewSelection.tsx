@@ -55,6 +55,12 @@ const InterviewSelection: React.FC<InterviewSelectionProps> = ({ onInterviewStar
     }
   };
 
+  const handleStartInterview = () => {
+    if (selectedInterview) {
+      onInterviewStart(selectedInterview.id);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-base px-6 py-section">
       <div className="mx-auto max-w-[900px]">
@@ -136,7 +142,7 @@ const InterviewSelection: React.FC<InterviewSelectionProps> = ({ onInterviewStar
                     Cancel
                   </Dialog.Close>
                   <button
-                    onClick={() => onInterviewStart(selectedInterview.id)}
+                    onClick={handleStartInterview}
                     className="rounded-lg bg-sage px-6 py-2 font-medium text-white hover:bg-sage/90"
                   >
                     Start Now
