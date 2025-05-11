@@ -27,7 +27,7 @@ function App() {
 
   return (
     <div className="min-h-screen bg-[#FFFFFF]">
-      <Hero />
+      <Hero onStartPracticing={handleStartPracticing} />
       <div className="py-24">
         <InterviewList />
       </div>

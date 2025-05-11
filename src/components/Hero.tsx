@@ -5,7 +5,11 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const Hero: React.FC = () => {
+interface HeroProps {
+  onStartPracticing: () => void;
+}
+
+const Hero: React.FC<HeroProps> = ({ onStartPracticing }) => {
   const imageRef = useRef<HTMLImageElement>(null);
   const headlineRef = useRef<HTMLHeadingElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -78,6 +82,7 @@ const Hero: React.FC = () => {
           </motion.p>
 
           <motion.button
+            onClick={onStartPracticing}
             className="group relative overflow-hidden rounded-lg bg-parchment px-8 py-4 text-espresso transition-all hover:bg-espresso hover:text-parchment"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
