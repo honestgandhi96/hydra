@@ -29,14 +29,27 @@ const SpotlightCarousel: React.FC<SpotlightCarouselProps> = ({
   const carouselRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (!carouselRef.current) return;
+
     // Initialize smooth scroll
     const lenis = new Lenis({
+      wrapper: carouselRef.current,
+      content: carouselRef.current,
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'horizontal',
       gestureOrientation: 'horizontal',
       smoothWheel: true,
+      smoothTouch: true,
+      touchMultiplier: 2,
     });
+
+    function raf(time: number) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+
+    requestAnimationFrame(raf);
 
     // GSAP ScrollTrigger for fade-out gradients
     if (containerRef.current && carouselRef.current) {
@@ -50,6 +63,7 @@ const SpotlightCarousel: React.FC<SpotlightCarouselProps> = ({
           start: 'left left',
           end: '10% left',
           scrub: true,
+          horizontal: true,
         },
       });
 
@@ -60,31 +74,40 @@ const SpotlightCarousel: React.FC<SpotlightCarouselProps> = ({
           start: 'right right',
           end: '90% right',
           scrub: true,
+          horizontal: true,
         },
       });
     }
 
     return () => {
       lenis.destroy();
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
     };
   }, []);
 
   return (
-    <div ref={containerRef} className="relative overflow-hidden">
+    <div ref={containerRef} className="relative">
       {/* Fade-out gradients */}
-      <div className="fade-left pointer-events-none absolute left-0 top-0 h-full w-32 bg-gradient-to-r from-base to-transparent opacity-0" />
-      <div className="fade-right pointer-events-none absolute right-0 top-0 h-full w-32 bg-gradient-to-l from-base to-transparent opacity-0" />
+      <div className="fade-left pointer-events-none absolute left-0 top-0 z-10 h-full w-32 bg-gradient-to-r from-base to-transparent opacity-0" />
+      <div className="fade-right pointer-events-none absolute right-0 top-0 z-10 h-full w-32 bg-gradient-to-l from-base to-transparent opacity-0" />
 
       {/* Carousel */}
       <div
         ref={carouselRef}
-        className="flex snap-x snap-mandatory gap-6 overflow-x-auto pb-6"
-        style={{ scrollSnapType: 'x mandatory' }}
+        className="flex gap-6 overflow-x-auto pb-6 scrollbar-none"
+        style={{
+          WebkitOverflowScrolling: 'touch',
+          scrollbarWidth: 'none',
+          msOverflowStyle: 'none',
+        }}
       >
-        {interviews.map((interview) => (
-          <div
+        {interviews.map((interview, index) => (
+          <motion.div
             key={interview.id}
-            className="snap-center"
+            className="flex-shrink-0"
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: index * 0.1 }}
           >
             <SpotlightCard
               logoSrc={interview.avatar_url}
@@ -94,7 +117,7 @@ const SpotlightCarousel: React.FC<SpotlightCarouselProps> = ({
               ctaHref={`#interview-${interview.id}`}
               onPlay={() => onInterviewSelect(interview.id)}
             />
-          </div>
+          </motion.div>
         ))}
       </div>
     </div>
