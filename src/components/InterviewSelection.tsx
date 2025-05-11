@@ -296,7 +296,7 @@ const InterviewSelection: React.FC<InterviewSelectionProps> = ({ onInterviewStar
             ))}
           </AnimatePresence>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };
